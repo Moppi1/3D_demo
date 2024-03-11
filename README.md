@@ -13,7 +13,7 @@ Dazu kann unter dem Button "Code" (oben rechts, siehe oberes Bild), die Option "
 Sobald die ZIP datei heruntergeladen wurde kann diese extrahiert werden.  
 
 **3. Anwendung  Ausführen:**   
-In dem Ordner, in dem die einzelnen Python-Skripte liegen, kann nun bei Windows in die Kopfzeile mit
+In dem Ordner, in dem die einzelnen Python-Skripte liegen, kann nun bei Windows in die Kopfzeile mit/anstatt
 der Pfadangabe, `cmd` eingegeben werden (mit Enter bestätigen).
 ![grafik](https://github.com/Moppi1/3D_demo/assets/150188517/dc4073e6-fcc7-4af8-a361-460cc4716732)
 
