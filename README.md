@@ -28,7 +28,7 @@ Mögliche Probleme:
 Nach der Richtigen Ausführung der Schritte 1 bis 3 sollte das Programm eigentlich starten.
 Sollte die Anwendung dennoch nicht startet kann das mehrere Gründe haben..  
 
-**1. Falsches Verzeichnis**
+**1. Falsches Verzeichnis**  
 Der Befehl `python main.py` wurde nicht in dem richtigen Verzeichnis ausgeführt. Schließen sie dazu die Konsole,
 gehen sie in den Projekt-Ordner, in dem sich die Datei `main.py` findet, und führen sie dort erneut Schritt 3 aus.  
 
