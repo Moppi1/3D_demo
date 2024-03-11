@@ -2,7 +2,8 @@ Schritte zum Ausführen des Programms:
 --
 **1.Python installieren:**   
 Da das Programm in Python geschrieben wurde, muss zuerst eine Pythonversion (am besten eine der neuesten) installiert werden.
-Python kann entweder im Microsoft Store installiert werden oder online über https://www.python.org/downloads/.  
+Python kann entweder im Microsoft Store installiert https://apps.microsoft.com/detail/9pjpw5ldxlz5?hl=en-US&gl=US werden 
+oder online über https://www.python.org/downloads/.  
 
 **2. Anwendung  herunterladen:**  
 Nachdem Python heruntergeladen und installiert wurde können die Dateien von Github heruntergeladen werden.
