@@ -17,7 +17,7 @@ In dem Ordner, in dem die einzelnen Python-Skripte liegen, kann nun bei Windows 
 der Pfadangabe, `cmd` eingegeben werden (mit Enter bestätigen).
 ![grafik](https://github.com/Moppi1/3D_demo/assets/150188517/dc4073e6-fcc7-4af8-a361-460cc4716732)
 
-Dadurch öffnet sich die Konsole.
+Dadurch öffnet sich die Konsole direkt im richtigen Verzeichnis.
 ![grafik](https://github.com/Moppi1/3D_demo/assets/150188517/d346a169-f531-433c-b2dd-3a928667f265)
 
 In dem neu geöffneten Konsolenfenster kann nun `python main.py` eingegeben, und bestätigt werden.
