@@ -12,6 +12,9 @@ class vec:
 
 #3D Vector math
 
+    def copy(self):
+        return vec(self.x,self.y,self.z)
+
     def len(self): #returns length of vector
         return math.sqrt(self.x**2+self.y**2+self.z**2)
 

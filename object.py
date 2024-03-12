@@ -7,46 +7,40 @@ class object:
     """load an object from text file by name of this file
     can also get an transform along the axis (by default x= y= z= 0)
     """
-    def __init__(self,text:str,name:str="new object"):
+    def __init__(self,path:str,name:str="new object"):
         self.name = name
         
         # here was the replaced csv importer
-        def loadstl(txt):
-            """returns a list of triangles , and a list of normals"""
-            normal = []
+        def load_stl(txt): # imports the stl object file
+            """returns a list of triangles"""
             triangle = []
 
-            file = open(txt,'r')
+            file = open(txt,'r') # opening and importing
             content = file.readlines()
             file.close()
-            for i in range(len(content)):
-                cl = content[i]
-                if cl.find("facet normal") != -1 :
-                    cl =cl.replace("facet normal ","")
-                    #cl.replace("\n","")
-                    cl = cl.split(" ")
-                    normal.append(vmath.vec(float(cl[0]),float(cl[1]),float(cl[2])))
 
-                elif cl.find("outer loop") != -1 :
+            for i in range(len(content)): #  processing of the stl object
+
+                cl = content[i] # current line
+
+                if cl.find("outer loop") != -1 :
                     tri = []
                     for j in range(3):
                         cl = content[i+j+1]
                         cl = cl.replace("vertex ","")
-                        #cl.replace("\n","")
                         cl = cl.split(" ")
-                        tri.append(vmath.vec(float(cl[0]),float(cl[1]),float(cl[2])))
+                        tri.append(v.vec(float(cl[0]),float(cl[1]),float(cl[2])))
                     triangle.append(tri)
                     i += 5
-            return triangle , normal
+            return triangle
 
 
-        self.form , self.normal = loadstl(text)
+        self.tri = load_stl(path)
 
         self.position = v.vec(0,0,0) #Translation along the axes
-        self.scale = v.vec(1,1,1) # scale alon the axes
+        self.scale = v.vec(1,1,1) # scale along the axes
         self.rotation = v.vec(0,0,0) #Rotation around the glaobal axes
 
-        self.tri = self.form
         #print([str(j) for j in self.tri])
         
 
@@ -61,9 +55,10 @@ class object:
 
     def render(self,camera:camera):
         """renders this object with a given camera object"""
-        self.apply()
-        camera.render(self.tri,self.normal)
+        camera.render(self.apply())
 
+
+    # ===== Transformation (just defining the Transformations)=====
     def setposition(self,v:v.vec):
         """moves the object to given values"""
         self.position.x = v.x
@@ -74,9 +69,6 @@ class object:
         self.position.x += v.x
         self.position.y += v.y
         self.position.z += v.z
-        self.x = round(self.x,4)
-        self.y = round(self.y,4)
-        self.z = round(self.z,4)
 
 
     def setrotation(self,v,over:bool=True):
@@ -88,33 +80,38 @@ class object:
         self.rotation.x = self.rotation.x if v.x == 0 and over == False else v.x
         self.rotation.y = self.rotation.y if v.y == 0 and over == False else v.y
         self.rotation.z = self.rotation.z if v.z == 0 and over == False else v.z
-    def rotate(self,v):
+    def rotate(self,v:v.vec):
         """rotates the object by given values along global axis"""
         self.rotation.x += v.x
-        self.rotation.ry += v.y
+        self.rotation.y += v.y
         self.rotation.z += v.z
 
-    def setsize(self,x,y,z):
-        """sets the size to given values"""
-        self.sx = x
-        self.sy = y
-        self.sz = z
-    def size(self,x,y,z):
-        """changes the size by given values"""
-        self.sx = x
-        self.sy = y
-        self.sz = z
 
+    def setsize(self,v:v.vec):
+        """sets the size to given values"""
+        self.sx = v.x
+        self.sy = v.y
+        self.sz = v.z
+    def size(self,v:v.vec):
+        """changes the size by given values"""
+        self.sx = v.x
+        self.sy = v.y
+        self.sz = v.z
+
+    # ===== applying the Transformation before rendering the Object =====
     def apply(self):
-        """adds the transformation to the triangles"""
-        self.tri = [] #resets the triangles
-        
-        for i in self.form: #applies transform on 
+        """applies the transformation to the triangles"""
+        #self.form = self.tri.copy()
+        #self.tri = [] #resets the triangles
+        t_coords = []
+        for i in self.tri: #applies transform on 
             tri = []
             for j in i:
-                t = v.vec(j.x,j.y,j.z)
-                t.mulvec(v.vec(self.sx,self.sy,self.sz)) #size
-                t.rot(self.rx,self.ry,self.rz) #rotation
-                t.addvec(v.vec(self.x,self.y,self.z)) #pos
+
+                t = j.mulvec(self.scale)                    #size
+                t = t.rot(self.rotation.x,self.rotation.y,self.rotation.z)          #rotation
+                t = t.addvec(self.position)   #pos
                 tri.append(t)
-            self.tri.append(tri)
+
+            t_coords.append(tri)
+        return t_coords

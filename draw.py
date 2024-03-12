@@ -142,6 +142,18 @@ def fill_polygon(vl,color=(0,0,0),w=0,anti=False):
         pygame.gfxdraw.aapolygon(screen,clr,color)
     else:
         pygame.draw.polygon(screen,color,clr,int(w))
+def fill_polygon_cords(p,color=(0,0,0),w=0,anti=False):
+    """draws an filled polygon from given coords e.g. [ [x,y], [x,y], ... ]"""
+    clr = []
+    for i in p:
+        x = int(i[0] + change_width)
+        y = int((i[1] - change_height)*-1)
+        clr.append((x,y))
+    if anti:
+        pygame.gfxdraw.filled_polygon(screen,clr,color)
+        pygame.gfxdraw.aapolygon(screen,clr,color)
+    else:
+        pygame.draw.polygon(screen,color,clr,int(w))
 
 def line(p1 : vec_2d.vec ,p2 : vec_2d.vec,w=3,color=(0,0,0),anti=False):
     """draws a line between p1 , p2   e.g. vec1 , vec2 """
