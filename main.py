@@ -5,17 +5,17 @@ import vmath  as v
 #import time   as t
 
 # main variabels
-frate = 70 # variable Framerate (Program tries to match the framerate)
+frate = 40 # variable Framerate (Program tries to match the framerate)
 
 
 def main():
-    suzanne = o.object("objects/suzanne.stl")#"objects/test_object.stl"
+    suzanne = o.object("objects/plane.stl")#"objects/test_object.stl"
     suzanne.setrotation(v.vec(0,0,90),True)
     suzanne.move(v.vec(20,0,0))
 
     sony = c.camera(5)
 
-    window(1080,1080,"3D Demo","graphics/Logotrans.png")#720
+    window(1440,720,"3D Demo","graphics/Logotrans.png")#720
 
     def keybindings(spd):
 

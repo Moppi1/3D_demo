@@ -107,19 +107,11 @@ class object:
             tri = []
             for j in i:
 
-                #t = j.mulvec(self.scale)                    #size
-                t = j.rot(self.rotation.x,self.rotation.y,self.rotation.z)          #rotation
-                t = t.addvec(self.position)   #pos
+                t = j.mulvec(self.scale)                                            #scaling
+                t = t.rot(self.rotation.x,self.rotation.y,self.rotation.z)          #rotating
+                t = t.addvec(self.position)                                         #translating
                 tri.append(t)
 
             t_coords.append(tri)
-        
-        #print("==========")
-        #if self.backup != 0 :
-        #   for i in range(5):
-        #       d = self.backup[i][1].subvec(t_coords[i][1])
-        #       print(d.z)
 
-        #self.backup = t_coords.copy()
-        
         return t_coords

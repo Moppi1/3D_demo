@@ -23,19 +23,31 @@ class camera():
         p_width = d.get_window_dimensions()[1]// 2 # half the window width
 
         def _project(point): #projection of a single point (given as vector)
+
             vp = point.subvec(self.position)
 
-            dis = (vp.skal(self.facing)) # distance from camera origin
+            dis = vp.skal(self.facing) # distance from camera origin
 
-            u = (((vp.skal(self.up)) /  dis ) * self.focal_length) # calculating u screen coordinate (5.1.)
-            #print("u",u)
+            u = (vp.skal(self.up)  * self.focal_length) /  dis  # calculating u screen coordinate (5.1.)
+            #u = u-1 if u >1 else u+1
             u *= p_width
 
-            v = (((vp.skal(self.side)) /  dis ) * self.focal_length)
-            #print("v",v)
+            v = (vp.skal(self.side)* self.focal_length) /  dis  
+            #v = v-1 if v >1 else v+1
             v *= p_width
 
-            return u,v,dis # u is up axis
+            return u,v,dis
+        
+        def proj(point):
+            vp = point.subvec(self.position)
+
+            dis = vp.skal(self.facing)
+
+            per = vp.perp(self.facing)
+
+            v = (per.y/dis) * self.focal_length
+            u = (per.z/dis) * self.focal_length
+            return u*p_width,v*p_width,dis
 
 
         distance = np.zeros(len(triangles),float)
@@ -52,7 +64,7 @@ class camera():
 
                 u , v , dis = _project(p)
 
-                if dis < 0.1 :
+                if dis < 0.3 :
                     show[i] = False
                     break
 
@@ -68,7 +80,7 @@ class camera():
         def shade(): #shade with different colors by higher distance
 
             #sorting by distance for nicer rendering
-            order = distance.argsort()
+            order = distance.argsort()[::-1]
 
             j=0
             end = show.size
@@ -81,6 +93,7 @@ class camera():
 
         def flat():  #shade in one single color (white)
             end = show.size
+            j=0
             for i in screen_coords: #final print of the surfaces
 
                 if show[j]:
