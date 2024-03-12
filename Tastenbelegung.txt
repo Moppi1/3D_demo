@@ -1,0 +1,18 @@
+==== Tastenbelegungen: ==== 
+
+Kamerasteuerung:
+        Rechte und Linke Pfeiltaste, um die Kamera um die Z-Achse zu rotieren
+
+
+Objekt Steuerung:
+        w - um das Objekt entlang der X-Achse zu verschieben (in Vorzugsrichtung)
+        s - um das Objekt entlang der X-Achse zu verschieben (entgegen der Vorzugsrichtung)
+        a - um das Objekt entlang der Y-Achse zu verschieben (entgegen der Vorzugsrichtung)
+        d - um das Objekt entlang der Y-Achse zu verschieben (in Vorzugsrichtung)
+        e - um das Objekt entlang der Z-Achse zu verschieben (entgegen der Vorzugsrichtung)
+        q - um das Objekt entlang der Z-Achse zu verschieben (in Vorzugsrichtung)
+
+        y - um das Objekt zu vergrößern, skalieren
+        x - um das Objekt zu verkleinern
+
+        r - um das Objekt zu rotieren
