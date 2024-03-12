@@ -53,9 +53,9 @@ class object:
         return "".join([i for i in t])
     
 
-    def render(self,camera:camera):
+    def render(self,camera:camera,shading=1):
         """renders this object with a given camera object"""
-        camera.render(self.apply())
+        camera.render(self.apply(),shading)
 
 
     # ===== Transformation (just defining the Transformations)=====
@@ -94,9 +94,9 @@ class object:
         self.sz = v.z
     def size(self,v:v.vec):
         """changes the size by given values"""
-        self.scale.x = v.x
-        self.scale.y = v.y
-        self.scale.z = v.z
+        self.scale.x += v.x
+        self.scale.y += v.y
+        self.scale.z += v.z
 
     # ===== applying the Transformation before rendering the Object =====
     def apply(self):
