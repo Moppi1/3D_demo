@@ -101,17 +101,25 @@ class object:
     # ===== applying the Transformation before rendering the Object =====
     def apply(self):
         """applies the transformation to the triangles"""
-        #self.form = self.tri.copy()
-        #self.tri = [] #resets the triangles
+
         t_coords = []
         for i in self.tri: #applies transform on 
             tri = []
             for j in i:
 
-                t = j.mulvec(self.scale)                    #size
-                t = t.rot(self.rotation.x,self.rotation.y,self.rotation.z)          #rotation
+                #t = j.mulvec(self.scale)                    #size
+                t = j.rot(self.rotation.x,self.rotation.y,self.rotation.z)          #rotation
                 t = t.addvec(self.position)   #pos
                 tri.append(t)
 
             t_coords.append(tri)
+        
+        #print("==========")
+        #if self.backup != 0 :
+        #   for i in range(5):
+        #       d = self.backup[i][1].subvec(t_coords[i][1])
+        #       print(d.z)
+
+        #self.backup = t_coords.copy()
+        
         return t_coords

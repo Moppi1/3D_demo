@@ -20,17 +20,19 @@ class camera():
     def render(self,triangles) -> None:
         """triangles have to have the shape [[v1,v2,v3],...]"""
 
-        p_width = d.get_window_dimensions()[0]// 2 # half the window width
+        p_width = d.get_window_dimensions()[1]// 2 # half the window width
 
-        def _project(point):
+        def _project(point): #projection of a single point (given as vector)
             vp = point.subvec(self.position)
 
             dis = (vp.skal(self.facing)) # distance from camera origin
 
-            u = ((vp.skal(self.up)) /  dis ) * self.focal_length # calculating u screen coordinate (5.1.)
+            u = (((vp.skal(self.up)) /  dis ) * self.focal_length) # calculating u screen coordinate (5.1.)
+            #print("u",u)
             u *= p_width
 
-            v = ((vp.skal(self.side)) /  dis ) * self.focal_length
+            v = (((vp.skal(self.side)) /  dis ) * self.focal_length)
+            #print("v",v)
             v *= p_width
 
             return u,v,dis # u is up axis
@@ -62,20 +64,35 @@ class camera():
             distance[i] = average_dis
             i += 1
         
-        #sorting by distance for nicer rendering
-        order = distance.argsort()
+        
+        def shade(): #shade with different colors by higher distance
 
+            #sorting by distance for nicer rendering
+            order = distance.argsort()
+
+            j=0
+            end = show.size
+            for i in screen_coords[order]: #final print of the surfaces
+                
+                if show[j]:
+                    d.fill_polygon_cords(i,(0,(240/end)*j+8,0), anti=True)
+                j += 1
+            j=0
+
+        def flat():  #shade in one single color (white)
+            end = show.size
+            for i in screen_coords: #final print of the surfaces
+
+                if show[j]:
+                    d.fill_polygon_cords(i,(255,255,255))
+                j += 1
+        
         #finally drawing the triangles
-        j=0
-        end = show.size
-        for i in screen_coords[order]: #final print of the surfaces
-            
-            if show[j]:
-                d.fill_polygon_cords(i,(0,(240/end)*j+8,0), anti=True)
-            j += 1
+        shade()
+
 
 
     def rotate(self,v:ve.vec): # rotating the camera
         self.facing=self.facing.rot(v.x,v.y,v.z).nor()
-        self.side  =self.side.rot(v.x,v.y,v.z).nor()
-        self.up    =self.up.rot(v.x,v.y,v.z).nor()
+        self.side  =  self.side.rot(v.x,v.y,v.z).nor()
+        self.up    =    self.up.rot(v.x,v.y,v.z).nor()
