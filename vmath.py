@@ -22,10 +22,12 @@ class vec:
         """sets this vector to its normalized (len = 1)
         if ret== True : the normalized vector is only returned
         """
-        x = self.x / self.len()
-        y = self.y / self.len()
-        z = self.z / self.len()
-        return vec(x,y,z)
+        len = self.len()
+        if len != 0:
+            x = self.x / len
+            y = self.y / len
+            z = self.z / len
+            return vec(x,y,z)
 
     def addskal(self,s): #returns this vektor + skalar
         x = self.x + s

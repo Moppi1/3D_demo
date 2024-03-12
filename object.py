@@ -59,7 +59,7 @@ class object:
 
 
     # ===== Transformation (just defining the Transformations)=====
-    def setposition(self,v:v.vec):
+    def setposition(self,v:v.vec): #Translatation
         """moves the object to given values"""
         self.position.x = v.x
         self.position.y = v.y
@@ -71,7 +71,7 @@ class object:
         self.position.z += v.z
 
 
-    def setrotation(self,v,over:bool=True):
+    def setrotation(self,v,over:bool=True): # Rotation
         """sets rotation to given values along global axis
         ---
         if over is False, only the rotation-values != 0 will overwrite an axis rotation
@@ -87,16 +87,16 @@ class object:
         self.rotation.z += v.z
 
 
-    def setsize(self,v:v.vec):
+    def setsize(self,v:v.vec): #Scaling
         """sets the size to given values"""
         self.sx = v.x
         self.sy = v.y
         self.sz = v.z
     def size(self,v:v.vec):
         """changes the size by given values"""
-        self.sx = v.x
-        self.sy = v.y
-        self.sz = v.z
+        self.scale.x = v.x
+        self.scale.y = v.y
+        self.scale.z = v.z
 
     # ===== applying the Transformation before rendering the Object =====
     def apply(self):

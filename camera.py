@@ -3,7 +3,6 @@ import vmath as ve
 import draw as d
 import numpy as np
 
-
 # === Camara Object for rendering the objects (projection) ===
 class camera():
     def __init__(self,focal_length:float) -> None:
@@ -37,7 +36,7 @@ class camera():
             return u,v,dis # u is up axis
 
 
-        distance = np.zeros([len(triangles),3],float)
+        distance = np.zeros(len(triangles),float)
         screen_coords = np.zeros([len(triangles),3,2],ve.vec)
         show = np.ones(len(triangles),bool)
 
@@ -45,24 +44,38 @@ class camera():
         i = 0
         for t in triangles:
             
-            #t_data[]
+            average_dis = 0
             j = 0
             for p in t: # every single point gets passed and projected
 
                 u , v , dis = _project(p)
 
                 if dis < 0.1 :
-                    show[i][j]=False
+                    show[i] = False
                     break
 
                 screen_coords[i][j][0] = v # corresponds the screen x
                 screen_coords[i][j][1] = u # corresponds the screen y
-                distance[i][j] = dis
+                average_dis += dis/3       # averade distance of one triangle from camera
 
                 j += 1
+            distance[i] = average_dis
             i += 1
+        
+        #sorting by distance for nicer rendering
+        order = distance.argsort()
 
-            #finally drawing the triangles
-        for i in screen_coords: #final print of the surfaces
-            #color += 1
-            d.fill_polygon_cords(i,(255,255,255), anti=True)#,anti=True
+        #finally drawing the triangles
+        j=0
+        end = show.size
+        for i in screen_coords[order]: #final print of the surfaces
+            
+            if show[j]:
+                d.fill_polygon_cords(i,(0,(240/end)*j+8,0), anti=True)
+            j += 1
+
+
+    def rotate(self,v:ve.vec): # rotating the camera
+        self.facing=self.facing.rot(v.x,v.y,v.z).nor()
+        self.side  =self.side.rot(v.x,v.y,v.z).nor()
+        self.up    =self.up.rot(v.x,v.y,v.z).nor()
